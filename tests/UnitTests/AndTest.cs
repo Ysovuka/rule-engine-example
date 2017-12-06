@@ -65,27 +65,31 @@ namespace UnitTests
                 .AddOperator(Operators.Equal)
                 .AddOperator(Operators.And);
 
-            var dougIs29 = new RuleContext("DougIsNot30")
+            var dougIs29 = new RuleContext("ActualPerson:Doug, ActualAge:29")
                 .AddVariable("ActualPerson", "Doug")
                 .AddVariable("ActualAge", 29);
 
-            var dougIs30 = new RuleContext("DougIs30")
+            var dougIs30 = new RuleContext("ActualPerson:Doug, ActualAge:30")
                 .AddVariable("ActualPerson", "Doug")
                 .AddVariable("ActualAge", 30);
 
-            var dougIs40 = new RuleContext("DougIs40")
+            var dougIs40 = new RuleContext("ActualPerson:Doug, ActualAge:40")
                 .AddVariable("ActualPerson", "Doug")
                 .AddVariable("ActualAge", 40);
+
+            var dougIsUnknownAge = new RuleContext("ActualPerson:Doug, ActualAge:")
+                .AddVariable("ActualPerson", "Doug")
+                .AddVariable("Lucky", true);
 
             var rule2 = new Rule("32GreaterThan5")
                 .AddVariable("LHS", 32)
                 .AddVariable("RHS")
                 .AddOperator(Operators.GreaterThan);
 
-            var rule2Context = new RuleContext("32GreaterThan5")
+            var rule2Context = new RuleContext("RHS:5")
                 .AddVariable("RHS", 5);
 
-            var rule2Context2 = new RuleContext("32GreaterThan43")
+            var rule2Context2 = new RuleContext("RHS:43")
                 .AddVariable("RHS", 43);
 
             var rule3 = new Rule("ContainsDog")
@@ -93,7 +97,7 @@ namespace UnitTests
                 .AddVariable("Value")
                 .AddOperator(Operators.Contains);
 
-            var rule3Context = new RuleContext("ContainsLizard")
+            var rule3Context = new RuleContext("Value:Lizard")
                 .AddVariable("Value", "Lizard");
 
             for (int i = 0; i < 1000000; i++)
@@ -106,6 +110,9 @@ namespace UnitTests
 
                 var propositionDougIs40 = rule.Evaluate(dougIs40);
                 Assert.IsFalse((bool)propositionDougIs40.Value);
+
+                var propositionDougIsUnknownAge = rule.Evaluate(dougIsUnknownAge);
+                Assert.IsFalse((bool)propositionDougIsUnknownAge.Value);
 
                 var propositionRule2Context = rule2.Evaluate(rule2Context);
                 Assert.IsTrue((bool)propositionRule2Context.Value);

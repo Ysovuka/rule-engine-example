@@ -43,8 +43,8 @@ namespace RuleEngine
             int count = Elements.Count;
             for (int i = 0; i < count; i++)
             {
-                var e = Elements[i];
-                var element = context.Find(e.Name);
+                IRuleElement e = Elements[i];
+                IRuleElement element = context.Find(e.Name);
                 if (e.GetType() != typeof(Operator))
                     _stack.Push(element ?? e);
                 else
@@ -73,8 +73,8 @@ namespace RuleEngine
 
         private Proposition ProcessOperator(Guid contextId, Operator @operator)
         {
-            var rhs = _stack.Pop();
-            var lhs = _stack.Pop();
+            IRuleElement rhs = _stack.Pop();
+            IRuleElement lhs = _stack.Pop();
 
             string propName = string.Empty;
             if ((Operators)@operator.Value == Operators.Not)
