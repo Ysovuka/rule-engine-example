@@ -12,10 +12,13 @@ namespace UnitTests
             var rule = new Rule("IsCat")
                 .AddVariable("ExpectedAnimal", "Cat")
                 .AddVariable("ActualAnimal")
-                .AddOperator(Operators.Equal);
+                .AddOperator(Operators.Equal)
+                .AddVariable("ExpectedAnimal", "Dog")
+                .AddVariable("ActualAnimal")
+                .AddOperator(Operators.NotEqual)
+                .AddOperator(Operators.And);
 
             var ruleContext = new RuleContext("IsCat")
-                .AddVariable("ExpectedAnimal", "Cat")
                 .AddVariable("ActualAnimal", "Cat");
 
             var proposition = rule.Evaluate(ruleContext);
@@ -50,7 +53,31 @@ namespace UnitTests
 
             var proposition = rule.Evaluate(ruleContext);
             Assert.IsTrue((bool)proposition.Value);
+        }
 
+        [TestMethod]
+        public void Groupings()
+        {
+            var rule = new Rule("IsCat")
+                .AddOperator(Operators.StartGrouping)
+                .AddVariable("ExpectedAnimal", "Cat")
+                .AddVariable("ActualAnimal")
+                .AddOperator(Operators.Equal)
+                .AddVariable("ExpectedAnimal", "Dog")
+                .AddVariable("ActualAnimal")
+                .AddOperator(Operators.Equal)
+                .AddOperator(Operators.Or)
+                .AddOperator(Operators.EndGrouping)
+                .AddVariable("ExpectedAnimal", "Fish")
+                .AddVariable("ActualAnimal")
+                .AddOperator(Operators.Equal)
+                .AddOperator(Operators.Or);
+
+            var ruleContext = new RuleContext("IsCat")
+                .AddVariable("ActualAnimal", "Cat");
+
+            var proposition = rule.Evaluate(ruleContext);
+            Assert.IsTrue((bool)proposition.Value);
         }
 
         [TestMethod]

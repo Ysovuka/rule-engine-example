@@ -7,7 +7,7 @@ namespace RuleEngine
 {
     public class Operator : IRuleElement
     {
-        public Operator(Operators @operator, string name = "")
+        public Operator(Operators @operator)
         {
             Name = @operator.ToString();
             Value = @operator;                

@@ -30,5 +30,10 @@ namespace RuleEngine
 
         [DisplayName("Contains")]
         Contains = 10,
+
+        [DisplayName("StartGrouping")]
+        StartGrouping = 11,
+        [DisplayName("EndGrouping")]
+        EndGrouping = 12,
     }
 }

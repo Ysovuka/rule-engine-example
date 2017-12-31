@@ -14,6 +14,7 @@ namespace RuleEngine
         private IDictionary<string, Proposition> cache = new Dictionary<string, Proposition>();
         private Stack<IRuleElement> _stack = new Stack<IRuleElement>();
 
+
         public List<IRuleElement> Elements { get; set; } = new List<IRuleElement>();
         public string Name { get; set;  }
 
@@ -38,15 +39,38 @@ namespace RuleEngine
             return this;
         }
 
-        public Proposition Evaluate(RuleContext context)
+        public Proposition Evaluate(RuleContext context, Queue<IRuleElement> elements = default(Queue<IRuleElement>))
         {
-            int count = Elements.Count;
+            if (elements == null)
+            {
+                elements = new Queue<IRuleElement>(Elements.ToArray());
+            }
+
+            int count = elements.Count;
+            int groupCount = 0;
             for (int i = 0; i < count; i++)
             {
-                IRuleElement e = Elements[i];
+                IRuleElement e = elements.Dequeue();
                 IRuleElement element = context.Find(e.Name);
                 if (e.GetType() != typeof(Operator))
                     _stack.Push(element ?? e);
+                else if ((Operators)e.Value == Operators.StartGrouping)
+                {
+                    groupCount++;
+
+                    var rule = new Rule($"Group_{groupCount}");
+                    var proposition = rule.Evaluate(context, elements);
+                    _stack.Push(proposition);
+                    count = elements.Count + 1;
+                }
+                else if ((Operators)e.Value == Operators.EndGrouping)
+                {
+                    if (_stack.Count > 1)
+                    {
+                        throw new InvalidOperationException("Invalid valid group expression.");
+                    }
+                    return (Proposition)_stack.Pop();
+                }
                 else
                 {
                     string cacheName = string.Join(" ", Name, context.Name);
