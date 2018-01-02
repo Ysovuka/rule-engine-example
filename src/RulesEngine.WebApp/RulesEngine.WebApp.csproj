@@ -1,0 +1,69 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <TypeScriptToolsVersion>2.5</TypeScriptToolsVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Scripts\app.ts" />
+    <None Remove="Scripts\describer\Describer.ts" />
+    <None Remove="Scripts\extensions\EnumExtensions.ts" />
+    <None Remove="Scripts\key-value-pair\KeyValuePair.ts" />
+    <None Remove="Scripts\rules-engine\IRuleElement.ts" />
+    <None Remove="Scripts\rules-engine\knockout\RuleContextViewModel.ts" />
+    <None Remove="Scripts\rules-engine\knockout\RuleElementConditions.ts" />
+    <None Remove="Scripts\rules-engine\knockout\RuleElementOperators.ts" />
+    <None Remove="Scripts\rules-engine\knockout\RuleElementTypes.ts" />
+    <None Remove="Scripts\rules-engine\knockout\RuleElementViewModel.ts" />
+    <None Remove="Scripts\rules-engine\knockout\RuleEngine.ts" />
+    <None Remove="Scripts\rules-engine\Operator.ts" />
+    <None Remove="Scripts\rules-engine\Proposition.ts" />
+    <None Remove="Scripts\rules-engine\Rule.ts" />
+    <None Remove="Scripts\rules-engine\RuleContext.ts" />
+    <None Remove="Scripts\rules-engine\ruleengine.ts" />
+    <None Remove="Scripts\rules-engine\RuleOverride.ts" />
+    <None Remove="Scripts\rules-engine\RuleSet.ts" />
+    <None Remove="Scripts\rules-engine\Variable.ts" />
+    <None Remove="Scripts\RuleViewModel.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RuleEngine\RuleEngine.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\app.ts" />
+    <TypeScriptCompile Include="Scripts\describer\Describer.ts" />
+    <TypeScriptCompile Include="Scripts\key-value-pair\KeyValuePair.ts" />
+    <TypeScriptCompile Include="Scripts\rules-engine\IRuleElement.ts" />
+    <TypeScriptCompile Include="Scripts\rules-engine\knockout\RuleContextViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\rules-engine\knockout\RuleElementConditions.ts" />
+    <TypeScriptCompile Include="Scripts\rules-engine\knockout\RuleElementOperators.ts" />
+    <TypeScriptCompile Include="Scripts\rules-engine\knockout\RuleElementTypes.ts" />
+    <TypeScriptCompile Include="Scripts\rules-engine\knockout\RuleElementViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\rules-engine\knockout\RuleEngine.ts" />
+    <TypeScriptCompile Include="Scripts\rules-engine\Operator.ts" />
+    <TypeScriptCompile Include="Scripts\rules-engine\Proposition.ts" />
+    <TypeScriptCompile Include="Scripts\rules-engine\Operators.ts" />
+    <TypeScriptCompile Include="Scripts\rules-engine\Rule.ts" />
+    <TypeScriptCompile Include="Scripts\rules-engine\RuleContext.ts" />
+    <TypeScriptCompile Include="Scripts\rules-engine\RuleEngine.ts" />
+    <TypeScriptCompile Include="Scripts\rules-engine\RuleOverride.ts" />
+    <TypeScriptCompile Include="Scripts\rules-engine\RuleSet.ts" />
+    <TypeScriptCompile Include="Scripts\rules-engine\Variable.ts" />
+    <TypeScriptCompile Include="Scripts\rules-engine\knockout\RuleViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\extensions\EnumExtensions.ts" />
+  </ItemGroup>
+
+</Project>

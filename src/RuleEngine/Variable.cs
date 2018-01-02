@@ -62,12 +62,12 @@ namespace RuleEngine
 
         private bool LessThan<T>(T lhs, object rhs)
         {
-            return Comparer<T>.Default.Compare(lhs, (T)rhs) < 0;
+            return Comparer<T>.Default.Compare((T)rhs, lhs) < 0;
         }
 
         private bool LessThanOrEqual<T>(T lhs, object rhs)
         {
-            return Comparer<T>.Default.Compare(lhs, (T)rhs) <= 0;
+            return Comparer<T>.Default.Compare((T)rhs, lhs) <= 0;
         }
 
         private bool Contains<T>(T lhs, object rhs)

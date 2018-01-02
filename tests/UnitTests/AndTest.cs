@@ -16,10 +16,15 @@ namespace UnitTests
                 .AddVariable("ExpectedAnimal", "Dog")
                 .AddVariable("ActualAnimal")
                 .AddOperator(Operators.NotEqual)
+                .AddOperator(Operators.Or)
+                .AddVariable("ExpectedAge", 30)
+                .AddVariable("ActualAge")
+                .AddOperator(Operators.LessThanOrEqual)
                 .AddOperator(Operators.And);
 
             var ruleContext = new RuleContext("IsCat")
-                .AddVariable("ActualAnimal", "Cat");
+                .AddVariable("ActualAnimal", "Cat")
+                .AddVariable("ActualAge", 29);
 
             var proposition = rule.Evaluate(ruleContext);
             Assert.IsTrue((bool)proposition.Value);

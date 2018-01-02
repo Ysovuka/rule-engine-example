@@ -67,7 +67,7 @@ namespace RuleEngine
                 {
                     if (_stack.Count > 1)
                     {
-                        throw new InvalidOperationException("Invalid valid group expression.");
+                        throw new InvalidOperationException("Invalid group expression.");
                     }
                     return (Proposition)_stack.Pop();
                 }

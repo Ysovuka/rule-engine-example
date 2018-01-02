@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es3",
+    "lib": [ "es2015", "es2015.iterable", "dom" ],
+    "allowJs": true,
+    "moduleResolution": "node",
+    "outDir": "wwwroot/src/",
+    "rootDir": "./Scripts/",
+    "module": "commonjs"
+  },
+  "include": ["Scripts/**/*"],
+  "exclude": [
+    "node_modules",
+    "wwwroot"
+  ]
+}
