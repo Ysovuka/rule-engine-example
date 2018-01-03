@@ -64,7 +64,7 @@ export class Rule {
 
         if (this._stack.length > 1)
             throw new EvalError("Syntax error, please evaluate the rule and try again.");
-
+        
         return <Proposition>this._stack.pop();
     }
 

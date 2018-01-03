@@ -15,6 +15,27 @@ $(document).ready(() => {
     $('#testRule').click(function () {
         $('#createRuleModal').modal('toggle');
         $('#testRuleModal').modal('toggle');
+
+        let count: number = viewModel.Elements().length;
+        let vars: Array<string> = new Array<string>();
+        for (let i: number = 0; i < count; i++) {
+            let e: RuleEngineKnockout.RuleElementViewModel = viewModel.Elements()[i];
+            let contextVarCount: number = ruleContextViewModel.Elements().length;
+            let contains: boolean = false;
+            for (let j: number = 0; j < contextVarCount; j++) {
+                if (ruleContextViewModel.Elements()[j].Name() == e.Name() || e.Name() == "") {
+                    contains = true;
+                    break;
+                }
+            }
+
+            if (contains) continue;
+
+            let element: RuleEngineKnockout.RuleElementViewModel = new RuleEngineKnockout.RuleElementViewModel();
+            element.Name(e.Name());
+
+            ruleContextViewModel.Elements.push(element);
+        }
     })
 
     $('#backRule').click(function () {

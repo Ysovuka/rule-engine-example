@@ -35,5 +35,12 @@ export class RuleElementViewModel {
 
     public TypeChanged(): void {
         this.Value("");
+
+        if (this.Type().toString() === "Operator") {
+            this.Name("");
+        }
+        else {
+            this.Operator(RuleElementOperators.None);
+        }
     }
 }

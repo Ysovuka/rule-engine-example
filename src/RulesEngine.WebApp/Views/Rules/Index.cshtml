@@ -123,6 +123,7 @@
                                 <th>Type</th>
                                 <th>Expression</th>
                                 <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody data-bind="foreach: Elements">
@@ -130,8 +131,8 @@
                                 <td style="padding-right: 5px;">
                                     <input id="ElementName" type="text" data-bind="value: Name" class="form-control" />
                                 </td>
-                                <td style="padding-right: 5px;">
-                                    <label style="width: 100%; vertical-align: middle;" class="label">=</label>
+                                <td style="width:auto;">
+                                    <label style="width: 100%;margin-top: 7.5px;text-align:center;" class="control-label">=</label>
                                 </td>
                                 <td>
                                     <input data-bind="value: Value" class="form-control" />
@@ -144,13 +145,14 @@
                                 <th>Type</th>
                                 <th>Expression</th>
                                 <th></th>
+                                <th></th>
                             </tr>
                         </tfoot>
                     </table>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" id="backRule" class="btn btn-default pull-left"><span class="glyphicon glyphicon-step-backward"></span> Back</button>
+                <button type="button" id="backRule" class="btn btn-default pull-left">Back</button>
 
                 <button type="button" id="saveRule" class="btn btn-success pull-right disabled">Save</button>
                 <button type="button" class="btn btn-info pull-right" id="testRuleContext">Test</button>

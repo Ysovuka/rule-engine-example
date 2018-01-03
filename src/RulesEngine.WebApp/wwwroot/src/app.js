@@ -6038,6 +6038,12 @@ var RuleElementViewModel = /** @class */ (function () {
     }
     RuleElementViewModel.prototype.TypeChanged = function () {
         this.Value("");
+        if (this.Type().toString() === "Operator") {
+            this.Name("");
+        }
+        else {
+            this.Operator(RuleElementOperators_1.RuleElementOperators.None);
+        }
     };
     return RuleElementViewModel;
 }());
@@ -6229,6 +6235,24 @@ $(document).ready(function () {
     $('#testRule').click(function () {
         $('#createRuleModal').modal('toggle');
         $('#testRuleModal').modal('toggle');
+        var count = viewModel.Elements().length;
+        var vars = new Array();
+        for (var i = 0; i < count; i++) {
+            var e = viewModel.Elements()[i];
+            var contextVarCount = ruleContextViewModel.Elements().length;
+            var contains = false;
+            for (var j = 0; j < contextVarCount; j++) {
+                if (ruleContextViewModel.Elements()[j].Name() == e.Name() || e.Name() == "") {
+                    contains = true;
+                    break;
+                }
+            }
+            if (contains)
+                continue;
+            var element = new RuleEngineKnockout.RuleElementViewModel();
+            element.Name(e.Name());
+            ruleContextViewModel.Elements.push(element);
+        }
     });
     $('#backRule').click(function () {
         $('#testRuleModal').modal('toggle');
