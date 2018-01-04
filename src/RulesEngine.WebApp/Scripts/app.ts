@@ -44,8 +44,33 @@ $(document).ready(() => {
     })
 
     $('#testRuleContext').click(function () {
+        $('#alertArea').empty();
+        $('#alertArea').html('<div id="testResultAlert" class="alert alert-info" role="alert">\
+            <label> Test Results: <span id="testResult"> </span></label> | \
+            <label> Server-side Result: <span id="serverResult" > </span></label>\
+            <button type="button" class="close" data- dismiss="alert" aria- label="Close">\
+               <span aria- hidden="true" >&times;</span>\
+            </button>\
+        </div>');
+
         $('#saveRule').prop('disabled', true);
-        $('#testResultAlert').hide();
+
+        let data: string = JSON.stringify(
+            {
+                rule: viewModel.CreateDataTransferObject(),
+                context: ruleContextViewModel.CreateDataTransferObject(),
+            });
+
+        $.ajax({
+            url: 'Rules/Test',
+            method: 'POST',
+            contentType: 'application/json',
+            data: data,
+
+            success: function (json) {
+                $('#serverResult').text(JSON.parse(json).result.Value);
+            },
+        })
 
         let rule: RuleEngine.Rule = viewModel.CreateRule();
         let ruleContext: RuleEngine.RuleContext = ruleContextViewModel.CreateContext();
@@ -60,35 +85,13 @@ $(document).ready(() => {
         }
         $('#testResult').text(result);
 
-        $('#testResultAlert').removeClass('hide');
-        $('#testResultAlert').show();
-
         $('#saveRule').removeClass('disabled');
         $('#saveRule').prop('disabled', false);
 
     });
 
     $('#saveRule').click(() => {
-        let ruleViewModel: { name: string, elements: Array<{ name: string, value: string, condition: string, type: string, operator: string }> } = {
-            name: "",
-            elements: new Array<{ name: string, value: string, condition: string, type: string, operator: string }>()
-        };
-        ruleViewModel.name = viewModel.Name();
-
-        let count: number = viewModel.Elements().length;
-        for (let i: number = 0; i < count; i++) {
-            let element: { name: string, value: string, type: string, condition: string, operator: string }
-                = {
-                    name: viewModel.Elements()[i].Name(),
-                    value: viewModel.Elements()[i].Value(),
-                    type: viewModel.Elements()[i].Type(),
-                    condition: viewModel.Elements()[i].Condition(),
-                    operator: viewModel.Elements()[i].Operator(),
-                };
-            ruleViewModel.elements.push(element);
-        }
-
-        let data: string = JSON.stringify(ruleViewModel);
+        let data: string = JSON.stringify(viewModel.CreateDataTransferObject());
 
         $.ajax({
             url: 'Rules/Create',

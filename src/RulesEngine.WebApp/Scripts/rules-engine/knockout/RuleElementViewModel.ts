@@ -43,4 +43,17 @@ export class RuleElementViewModel {
             this.Operator(RuleElementOperators.None);
         }
     }
+
+    public CreateDataTransferObject(): { name: string, value: string, type: string, condition: string, operator: string } {
+        let element: { name: string, value: string, type: string, condition: string, operator: string }
+            = {
+                name: this.Name(),
+                value: this.Value(),
+                type: this.Type(),
+                condition: this.Condition(),
+                operator: this.Operator(),
+            };
+
+        return element;
+    }
 }

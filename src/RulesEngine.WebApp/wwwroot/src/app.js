@@ -6045,6 +6045,16 @@ var RuleElementViewModel = /** @class */ (function () {
             this.Operator(RuleElementOperators_1.RuleElementOperators.None);
         }
     };
+    RuleElementViewModel.prototype.CreateDataTransferObject = function () {
+        var element = {
+            name: this.Name(),
+            value: this.Value(),
+            type: this.Type(),
+            condition: this.Condition(),
+            operator: this.Operator()
+        };
+        return element;
+    };
     return RuleElementViewModel;
 }());
 exports.RuleElementViewModel = RuleElementViewModel;
@@ -6259,8 +6269,28 @@ $(document).ready(function () {
         $('#createRuleModal').modal('toggle');
     });
     $('#testRuleContext').click(function () {
+        $('#alertArea').empty();
+        $('#alertArea').html('<div id="testResultAlert" class="alert alert-info" role="alert">\
+            <label> Test Results: <span id="testResult"> </span></label> | \
+            <label> Server-side Result: <span id="serverResult" > </span></label>\
+            <button type="button" class="close" data- dismiss="alert" aria- label="Close">\
+               <span aria- hidden="true" >&times;</span>\
+            </button>\
+        </div>');
         $('#saveRule').prop('disabled', true);
-        $('#testResultAlert').hide();
+        var data = JSON.stringify({
+            rule: viewModel.CreateDataTransferObject(),
+            context: ruleContextViewModel.CreateDataTransferObject()
+        });
+        $.ajax({
+            url: 'Rules/Test',
+            method: 'POST',
+            contentType: 'application/json',
+            data: data,
+            success: function (json) {
+                $('#serverResult').text(JSON.parse(json).result.Value);
+            }
+        });
         var rule = viewModel.CreateRule();
         var ruleContext = ruleContextViewModel.CreateContext();
         ruleContext.Name = rule.Name + "Context";
@@ -6272,29 +6302,11 @@ $(document).ready(function () {
             result = e;
         }
         $('#testResult').text(result);
-        $('#testResultAlert').removeClass('hide');
-        $('#testResultAlert').show();
         $('#saveRule').removeClass('disabled');
         $('#saveRule').prop('disabled', false);
     });
     $('#saveRule').click(function () {
-        var ruleViewModel = {
-            name: "",
-            elements: new Array()
-        };
-        ruleViewModel.name = viewModel.Name();
-        var count = viewModel.Elements().length;
-        for (var i = 0; i < count; i++) {
-            var element = {
-                name: viewModel.Elements()[i].Name(),
-                value: viewModel.Elements()[i].Value(),
-                type: viewModel.Elements()[i].Type(),
-                condition: viewModel.Elements()[i].Condition(),
-                operator: viewModel.Elements()[i].Operator()
-            };
-            ruleViewModel.elements.push(element);
-        }
-        var data = JSON.stringify(ruleViewModel);
+        var data = JSON.stringify(viewModel.CreateDataTransferObject());
         $.ajax({
             url: 'Rules/Create',
             method: 'POST',
@@ -6466,6 +6478,18 @@ var RuleViewModel = /** @class */ (function () {
             varCount = 0;
         }
         return rule;
+    };
+    RuleViewModel.prototype.CreateDataTransferObject = function () {
+        var ruleViewModel = {
+            name: "",
+            elements: new Array()
+        };
+        ruleViewModel.name = this.Name();
+        var count = this.Elements().length;
+        for (var i = 0; i < count; i++) {
+            ruleViewModel.elements.push(this.Elements()[i].CreateDataTransferObject());
+        }
+        return ruleViewModel;
     };
     return RuleViewModel;
 }());
@@ -6696,6 +6720,17 @@ var RuleContextViewModel = /** @class */ (function () {
     };
     RuleContextViewModel.prototype.RemoveElement = function (data) {
         this.Elements.remove(data);
+    };
+    RuleContextViewModel.prototype.CreateDataTransferObject = function () {
+        var e = {
+            name: this.Name(),
+            elements: new Array()
+        };
+        var count = this.Elements().length;
+        for (var i = 0; i < count; i++) {
+            e.elements.push(this.Elements()[i].CreateDataTransferObject());
+        }
+        return e;
     };
     return RuleContextViewModel;
 }());

@@ -30,4 +30,19 @@ export class RuleContextViewModel {
     public RemoveElement(data: RuleElementViewModel): void {
         this.Elements.remove(data);
     }
+
+    public CreateDataTransferObject(): { name: string, elements: Array<{ name: string, value: string, type: string, condition: string, operator: string }> } {
+        let e: { name: string, elements: Array<{ name: string, value: string, type: string, condition: string, operator: string }> } =
+            {
+                name: this.Name(),
+                elements: new Array<{ name: string, value: string, type: string, condition: string, operator: string }>()
+            };
+
+        let count: number = this.Elements().length;
+        for (let i: number = 0; i < count; i++) {
+            e.elements.push(this.Elements()[i].CreateDataTransferObject());
+        }
+
+        return e;
+    }
 }

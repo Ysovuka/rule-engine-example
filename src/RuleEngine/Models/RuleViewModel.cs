@@ -60,7 +60,7 @@ namespace RuleEngine.Models
                         varCount++;
 
                         rule.AddVariable("Expected" + e.Name, e.Value);
-                        rule.AddVariable("Actual" + e.Name, null);
+                        rule.AddVariable(e.Name, null);
                         rule.AddOperator((Operators)Enum.Parse(typeof(Operators), e.Condition));
 
                         if (varCount == 2 && @operator != null) {

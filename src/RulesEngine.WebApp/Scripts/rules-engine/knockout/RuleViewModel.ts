@@ -89,4 +89,18 @@ export class RuleViewModel {
 
         return rule;
     }
+
+    public CreateDataTransferObject(): { name: string, elements: Array<{ name: string, value: string, condition: string, type: string, operator: string }> } {
+        let ruleViewModel: { name: string, elements: Array<{ name: string, value: string, condition: string, type: string, operator: string }> } = {
+            name: "",
+            elements: new Array<{ name: string, value: string, condition: string, type: string, operator: string }>()
+        };
+        ruleViewModel.name = this.Name();
+
+        let count: number = this.Elements().length;
+        for (let i: number = 0; i < count; i++) {
+            ruleViewModel.elements.push(this.Elements()[i].CreateDataTransferObject());
+        }
+        return ruleViewModel;
+    }
 }
