@@ -9,6 +9,9 @@
     "@types/knockout": "^3.4.47",
     "@types/mocha": "^2.2.46",
     "chai": "^4.1.2",
+    "ignore-styles": "^5.0.1",
+    "jsdom": "^11.5.1",
+    "jsdom-global": "^3.0.2",
     "knockout": "^3.4.2",
     "mocha": "^4.1.0",
     "ts-loader": "^3.2.0",
@@ -22,10 +25,11 @@
   "name": "rulesengine.webapp",
   "scripts": {
     "build:dev": "webpack --display-error-details",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha -r ts-node/register -r ignore-styles -r jsdom-global/register Scripts/**/*.test.ts"
   },
   "-vs-binding": {
     "BeforeBuild": [
+      "test",
       "build:dev"
     ]
   },

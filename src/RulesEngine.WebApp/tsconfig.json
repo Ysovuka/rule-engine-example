@@ -16,6 +16,8 @@
   "include": ["Scripts/**/*"],
   "exclude": [
     "node_modules",
-    "wwwroot"
-  ]
+    "wwwroot",
+    "./Scripts/**/*.test.ts"
+  ],
+  "compileOnSave": true
 }

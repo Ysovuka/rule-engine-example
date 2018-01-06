@@ -61,6 +61,7 @@
     <TypeScriptCompile Include="Scripts\rules-engine\RuleEngine.ts" />
     <TypeScriptCompile Include="Scripts\rules-engine\RuleOverride.ts" />
     <TypeScriptCompile Include="Scripts\rules-engine\RuleSet.ts" />
+    <TypeScriptCompile Include="Scripts\rules-engine\Rules.test.ts" />
     <TypeScriptCompile Include="Scripts\rules-engine\Variable.ts" />
     <TypeScriptCompile Include="Scripts\rules-engine\knockout\RuleViewModel.ts" />
     <TypeScriptCompile Include="Scripts\extensions\EnumExtensions.ts" />
