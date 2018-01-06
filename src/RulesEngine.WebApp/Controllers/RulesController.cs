@@ -18,8 +18,6 @@ namespace RulesEngine.WebApp.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] RuleViewModel viewModel)
         {
-            var rule = viewModel.CreateRule();
-
             return Ok();
         }
 
